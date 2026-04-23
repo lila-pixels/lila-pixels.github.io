@@ -4,8 +4,6 @@
 
 @charset "utf-8";
 
-@use "sass:color";
-
 // Define defaults for each variable.
 $base-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !default;
 $base-font-size: 16px !default;
@@ -20,8 +18,8 @@ $background-color: #fdfdfd !default;
 $brand-color: #2a7ae2 !default;
 
 $grey-color: #828282 !default;
-$grey-color-light: color.adjust($grey-color, $lightness: 40%) !default;
-$grey-color-dark: color.adjust($grey-color, $lightness: -25%) !default;
+$grey-color-light: lighten($grey-color, 40%) !default;
+$grey-color-dark: darken($grey-color, 25%) !default;
 
 $table-text-align: left !default;
 
@@ -134,7 +132,7 @@ a {
   text-decoration: none;
 
   &:visited {
-    color: color.adjust($brand-color, $lightness: -15%);
+    color: darken($brand-color, 15%);
   }
 
   &:hover {
@@ -247,13 +245,13 @@ table {
   margin-bottom: $spacing-unit;
   width: 100%;
   text-align: $table-text-align;
-  color: color.adjust($text-color, $lightness: 18%);
+  color: lighten($text-color, 18%);
   border-collapse: collapse;
   border: 1px solid $grey-color-light;
 
   tr {
     &:nth-child(even) {
-      background-color: color.adjust($grey-color-light, $lightness: 6%);
+      background-color: lighten($grey-color-light, 6%);
     }
   }
 
@@ -263,9 +261,9 @@ table {
   }
 
   th {
-    background-color: color.adjust($grey-color-light, $lightness: 3%);
-    border: 1px solid color.adjust($grey-color-light, $lightness: -4%);
-    border-bottom-color: color.adjust($grey-color-light, $lightness: -12%);
+    background-color: lighten($grey-color-light, 3%);
+    border: 1px solid darken($grey-color-light, 4%);
+    border-bottom-color: darken($grey-color-light, 12%);
   }
 
   td {
