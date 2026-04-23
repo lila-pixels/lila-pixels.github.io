@@ -66,7 +66,6 @@
                     </h5>
                 </div>
             </div>
-            <br/>
             <div class="row authors justify-content-center">
                 <div class="col-sm-12">
                     <h6 class="text-center">
@@ -78,12 +77,376 @@
             </div>
         </div>
         <br/>
-        <h1 class="text-center" style="font-size:22px;">CVPR 2026</h1>
+        <h1 class="text-center" style="font-size:22px;">✨ CVPR 2026 Oral Presentation ✨</h1>
         <br/>
-        <p class="text-center" style="font-size: 1.1rem; margin-top: 10px;">
-            Project page under construction.
-        </p>
+        <div class="buttons" style="margin-bottom: 8px;">
+            <a class="btn btn-light" role="button" target="_blank" href="https://drive.google.com/file/d/1qXzxGk5JU8rvQwYTB6N8PVFR8YtlIqLt/preview">
+                <svg style="width:24px;height:24px;margin-left:-12px;margin-right:12px" viewBox="0 0 24 24">
+                    <path fill="currentColor" d="M16 0H8C6.9 0 6 .9 6 2V18C6 19.1 6.9 20 8 20H20C21.1 20 22 19.1 22 18V6L16 0M20 18H8V2H15V7H20V18M4 4V22H20V24H4C2.9 24 2 23.1 2 22V4H4M10 10V12H18V10H10M10 14V16H15V14H10Z"></path>
+                </svg>Paper
+            </a>
+            <a class="btn btn-light" role="button" href="https://drive.google.com/uc?export=download&id=1mGHhhILMktr-179boTiyTJIPWfVzKaCj">
+                <svg style="width:24px;height:24px;margin-left:-12px;margin-right:12px" viewBox="0 0 24 24">
+                    <path fill="currentColor"     stroke-width="1" d="M14 2H6a2 2 0 0 0-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6Zm1 7V3.5L19.5 9H15ZM10 8h2v2h-2V8Zm0 3h2v2h-2v-2Zm0 3h2v2h-2v-2Zm1 3c.55 0 1 .45 1 1v1h-2v-1c0-.55.45-1 1-1Z"></path>
+                </svg>Supplemental Material (26MB)
+            </a>
+            <a class="btn btn-light" aria-disabled="true" role="button" href="https://github.com/google-research/google-research/tree/master/lila">
+                <svg style="margin-left:-12px;margin-right:12px" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-github" viewBox="0 0 16 16">
+  <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8"/>
+</svg>
+                Code
+            </a>
+        </div>
     </div>
+    <hr class="divider" />
+    <div class="container" style="max-width: 768px;">
+        <div class="row">
+            <div class="col-md-12" style="font-size: 16pt;">
+                <b>The gist:</b>
+                <span>
+                    <!-- <strong> -->
+                        Learning dense representations from videos with linear in-context learning.
+                    <!-- </strong> -->
+                </span>
+            </div>
+        </div>
+    </div>
+    <br/>
+
+    <main class="container" style="max-width: 768px;">
+        <section class="split-video-section" aria-labelledby="split-video-title">
+            <div class="split-video" data-split-video>
+                <canvas class="split-video__canvas" data-split-canvas aria-label="Split-view video comparison"></canvas>
+
+                <div class="split-video__media" aria-hidden="true">
+                    <video class="split-video__source" muted loop playsinline preload="auto" data-master-video>
+                        <source src="/assets/videos/demo_frames.mp4" type="video/mp4">
+                    </video>
+
+                    <video class="split-video__source" muted loop playsinline preload="auto" data-follower-video>
+                        <source src="/assets/videos/demo_feats.mp4" type="video/mp4">
+                    </video>
+                </div>
+
+                <div class="split-video__label split-video__label--left">Image frames</div>
+                <div class="split-video__label split-video__label--right">LILA (PCA)</div>
+
+                <button class="split-video__handle"
+                        type="button"
+                        data-split-handle
+                        role="slider"
+                        aria-label="Move split-view divider"
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                        aria-valuenow="50">
+                    <span class="split-video__handle-line"></span>
+                    <span class="split-video__handle-grip" aria-hidden="true"></span>
+                </button>
+            </div>
+
+            <div class="split-video-controls" aria-label="Video playback controls">
+                <button type="button" class="split-video-controls__button" data-skip="-5">-5s</button>
+                <button type="button" class="split-video-controls__button split-video-controls__button--primary" data-toggle-play aria-label="Pause video">Pause</button>
+                <button type="button" class="split-video-controls__button" data-skip="5">+5s</button>
+            </div>
+        </section>
+    </main>
+
+    <hr class="divider" />
+    <h2 class="text-center mb-3">Citation</h2>
+
+    <div class="container" style="max-width: 768px;">
+        <div class="row">
+            <div class="col-md-12">
+                <code>
+                    @inproceedings{Araslanov:2025:LILA,<br>
+                    &nbsp; author = {Araslanov, Nikita and Sundermeyer, Martin and Matsuki, Hidenobu and Tan, David Joseph and Tombari, Federico},<br>
+                    &nbsp; title  = {Featurising Pixels from Dynamic 3D Scenes with Linear In-Context Learners},<br>
+                    &nbsp; booktitle = {CVPR},<br>
+                    &nbsp; year   = {2026},<br>
+                }</code>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function () {
+            const splitVideo = document.querySelector('[data-split-video]');
+
+            if (!splitVideo) {
+                return;
+            }
+
+            const canvas = splitVideo.querySelector('[data-split-canvas]');
+            const context = canvas.getContext('2d');
+            const handle = splitVideo.querySelector('[data-split-handle]');
+            const playToggle = document.querySelector('[data-toggle-play]');
+            const skipButtons = Array.from(document.querySelectorAll('[data-skip]'));
+            const primaryVideo = splitVideo.querySelector('[data-master-video]');
+            const followerVideo = splitVideo.querySelector('[data-follower-video]');
+            let split = 50;
+            let isDragging = false;
+            let renderLoopId = null;
+
+            function playVideo(video) {
+                video.play().catch(() => {});
+            }
+
+            function setSplit(nextSplit) {
+                split = Math.max(0, Math.min(100, nextSplit));
+                handle.style.left = split + '%';
+                handle.setAttribute('aria-valuenow', Math.round(split));
+                renderFrame();
+            }
+
+            function setSplitFromPointer(event) {
+                const rect = splitVideo.getBoundingClientRect();
+                const pointerX = event.clientX ?? (event.touches && event.touches[0].clientX);
+
+                if (typeof pointerX !== 'number') {
+                    return;
+                }
+
+                setSplit(((pointerX - rect.left) / rect.width) * 100);
+            }
+
+            function resizeCanvas() {
+                const rect = splitVideo.getBoundingClientRect();
+                const devicePixelRatio = window.devicePixelRatio || 1;
+                const width = Math.max(1, Math.round(rect.width * devicePixelRatio));
+                const height = Math.max(1, Math.round(rect.height * devicePixelRatio));
+
+                if (canvas.width !== width || canvas.height !== height) {
+                    canvas.width = width;
+                    canvas.height = height;
+                }
+            }
+
+            function getCoverSourceRect(video) {
+                if (video.readyState < HTMLMediaElement.HAVE_CURRENT_DATA || !video.videoWidth || !video.videoHeight) {
+                    return null;
+                }
+
+                const canvasWidth = canvas.width;
+                const canvasHeight = canvas.height;
+                const sourceAspect = video.videoWidth / video.videoHeight;
+                const destinationAspect = canvasWidth / canvasHeight;
+                let sourceWidth = video.videoWidth;
+                let sourceHeight = video.videoHeight;
+                let sourceX = 0;
+                let sourceY = 0;
+
+                if (sourceAspect > destinationAspect) {
+                    sourceWidth = video.videoHeight * destinationAspect;
+                    sourceX = (video.videoWidth - sourceWidth) / 2;
+                } else {
+                    sourceHeight = video.videoWidth / destinationAspect;
+                    sourceY = (video.videoHeight - sourceHeight) / 2;
+                }
+
+                return {
+                    sourceX,
+                    sourceY,
+                    sourceWidth,
+                    sourceHeight,
+                };
+            }
+
+            function drawClippedCover(video, clipX, clipWidth) {
+                if (!clipWidth) {
+                    return;
+                }
+
+                const sourceRect = getCoverSourceRect(video);
+
+                if (!sourceRect) {
+                    return;
+                }
+
+                const canvasWidth = canvas.width;
+                const canvasHeight = canvas.height;
+                context.save();
+                context.beginPath();
+                context.rect(clipX, 0, clipWidth, canvasHeight);
+                context.clip();
+
+                context.drawImage(
+                    video,
+                    sourceRect.sourceX,
+                    sourceRect.sourceY,
+                    sourceRect.sourceWidth,
+                    sourceRect.sourceHeight,
+                    0,
+                    0,
+                    canvasWidth,
+                    canvasHeight
+                );
+                context.restore();
+            }
+
+            function renderFrame() {
+                resizeCanvas();
+
+                const canvasWidth = canvas.width;
+                const canvasHeight = canvas.height;
+                const splitX = Math.round((split / 100) * canvasWidth);
+
+                context.clearRect(0, 0, canvasWidth, canvasHeight);
+                context.fillStyle = '#121416';
+                context.fillRect(0, 0, canvasWidth, canvasHeight);
+
+                drawClippedCover(primaryVideo, 0, splitX);
+                drawClippedCover(followerVideo, splitX, canvasWidth - splitX);
+            }
+
+            function syncFollowerTime() {
+                if (followerVideo.readyState >= HTMLMediaElement.HAVE_METADATA) {
+                    followerVideo.currentTime = primaryVideo.currentTime;
+                }
+            }
+
+            function startRenderLoop() {
+                if (renderLoopId !== null) {
+                    return;
+                }
+
+                function render() {
+                    renderFrame();
+                    if (primaryVideo.paused) {
+                        renderLoopId = null;
+                        return;
+                    }
+
+                    renderLoopId = window.requestAnimationFrame(render);
+                }
+
+                renderLoopId = window.requestAnimationFrame(render);
+            }
+
+            function stopRenderLoop() {
+                if (renderLoopId === null) {
+                    return;
+                }
+
+                window.cancelAnimationFrame(renderLoopId);
+                renderLoopId = null;
+            }
+
+            function updatePlayButton() {
+                const isPaused = primaryVideo.paused;
+                playToggle.textContent = isPaused ? 'Play' : 'Pause';
+                playToggle.setAttribute('aria-label', isPaused ? 'Play video' : 'Pause video');
+            }
+
+            function seekBy(seconds) {
+                const duration = Number.isFinite(primaryVideo.duration) ? primaryVideo.duration : 0;
+                const nextTime = Math.max(0, Math.min(primaryVideo.currentTime + seconds, duration || primaryVideo.currentTime + seconds));
+
+                primaryVideo.currentTime = nextTime;
+            }
+
+            function pausePlayback() {
+                primaryVideo.pause();
+            }
+
+            splitVideo.addEventListener('pointerdown', (event) => {
+                isDragging = true;
+                splitVideo.setPointerCapture(event.pointerId);
+                setSplitFromPointer(event);
+            });
+
+            splitVideo.addEventListener('pointermove', (event) => {
+                if (!isDragging) {
+                    return;
+                }
+
+                setSplitFromPointer(event);
+            });
+
+            splitVideo.addEventListener('pointerup', () => {
+                isDragging = false;
+            });
+
+            splitVideo.addEventListener('pointercancel', () => {
+                isDragging = false;
+            });
+
+            handle.addEventListener('keydown', (event) => {
+                const step = event.shiftKey ? 10 : 2;
+
+                if (event.key === 'ArrowLeft') {
+                    event.preventDefault();
+                    setSplit(split - step);
+                }
+
+                if (event.key === 'ArrowRight') {
+                    event.preventDefault();
+                    setSplit(split + step);
+                }
+            });
+
+            playToggle.addEventListener('click', () => {
+                if (primaryVideo.paused) {
+                    playVideo(primaryVideo);
+                    return;
+                }
+
+                pausePlayback();
+            });
+
+            skipButtons.forEach((button) => {
+                button.addEventListener('click', () => {
+                    seekBy(Number(button.dataset.skip));
+                });
+            });
+
+            primaryVideo.addEventListener('play', () => {
+                syncFollowerTime();
+                playVideo(followerVideo);
+                startRenderLoop();
+                updatePlayButton();
+            });
+
+            primaryVideo.addEventListener('pause', () => {
+                followerVideo.pause();
+                stopRenderLoop();
+                updatePlayButton();
+                renderFrame();
+            });
+
+            primaryVideo.addEventListener('seeked', () => {
+                syncFollowerTime();
+                if (!primaryVideo.paused) {
+                    playVideo(followerVideo);
+                }
+                renderFrame();
+            });
+
+            primaryVideo.addEventListener('loadedmetadata', () => {
+                if (primaryVideo.videoWidth && primaryVideo.videoHeight) {
+                    splitVideo.style.aspectRatio = primaryVideo.videoWidth + ' / ' + primaryVideo.videoHeight;
+                }
+                renderFrame();
+            });
+
+            followerVideo.addEventListener('loadedmetadata', renderFrame);
+            followerVideo.addEventListener('loadeddata', () => {
+                syncFollowerTime();
+                if (!primaryVideo.paused) {
+                    playVideo(followerVideo);
+                }
+                renderFrame();
+            });
+            primaryVideo.addEventListener('loadeddata', renderFrame);
+
+            window.addEventListener('resize', renderFrame);
+
+            setSplit(split);
+            updatePlayButton();
+            renderFrame();
+            playVideo(primaryVideo);
+        }());
+    </script>
 </body>
 
 </html>
