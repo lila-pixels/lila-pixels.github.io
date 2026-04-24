@@ -187,6 +187,9 @@
             let split = 50;
             let isDragging = false;
             let renderLoopId = null;
+            const HARD_SYNC_DRIFT_SECONDS = 0.12;
+            const SOFT_SYNC_DRIFT_SECONDS = 0.03;
+            const MAX_PLAYBACK_RATE_ADJUSTMENT = 0.12;
 
             function playVideo(video) {
                 video.play().catch(() => {});
@@ -299,9 +302,54 @@
                 drawClippedCover(followerVideo, splitX, canvasWidth - splitX);
             }
 
-            function syncFollowerTime() {
-                if (followerVideo.readyState >= HTMLMediaElement.HAVE_METADATA) {
-                    followerVideo.currentTime = primaryVideo.currentTime;
+            function syncFollowerPlayback(options = {}) {
+                const { forceSeek = false } = options;
+
+                if (
+                    primaryVideo.readyState < HTMLMediaElement.HAVE_METADATA ||
+                    followerVideo.readyState < HTMLMediaElement.HAVE_METADATA
+                ) {
+                    return;
+                }
+
+                const followerDuration = Number.isFinite(followerVideo.duration) ? followerVideo.duration : null;
+                const targetTime = Math.max(
+                    0,
+                    Math.min(primaryVideo.currentTime, followerDuration ?? primaryVideo.currentTime)
+                );
+                const drift = targetTime - followerVideo.currentTime;
+                const targetRate = primaryVideo.playbackRate;
+
+                if (Math.abs(followerVideo.defaultPlaybackRate - primaryVideo.defaultPlaybackRate) > 0.001) {
+                    followerVideo.defaultPlaybackRate = primaryVideo.defaultPlaybackRate;
+                }
+
+                if (forceSeek || !Number.isFinite(drift) || Math.abs(drift) >= HARD_SYNC_DRIFT_SECONDS) {
+                    if (Math.abs(drift) > 0.001) {
+                        followerVideo.currentTime = targetTime;
+                    }
+
+                    if (Math.abs(followerVideo.playbackRate - targetRate) > 0.001) {
+                        followerVideo.playbackRate = targetRate;
+                    }
+                    return;
+                }
+
+                if (Math.abs(drift) >= SOFT_SYNC_DRIFT_SECONDS) {
+                    const rateAdjustment = Math.max(
+                        -MAX_PLAYBACK_RATE_ADJUSTMENT,
+                        Math.min(MAX_PLAYBACK_RATE_ADJUSTMENT, drift * 2)
+                    );
+                    const nextRate = Math.max(0.25, targetRate + rateAdjustment);
+
+                    if (Math.abs(followerVideo.playbackRate - nextRate) > 0.001) {
+                        followerVideo.playbackRate = nextRate;
+                    }
+                    return;
+                }
+
+                if (Math.abs(followerVideo.playbackRate - targetRate) > 0.001) {
+                    followerVideo.playbackRate = targetRate;
                 }
             }
 
@@ -311,6 +359,7 @@
                 }
 
                 function render() {
+                    syncFollowerPlayback();
                     renderFrame();
                     if (primaryVideo.paused) {
                         renderLoopId = null;
@@ -401,7 +450,7 @@
             });
 
             primaryVideo.addEventListener('play', () => {
-                syncFollowerTime();
+                syncFollowerPlayback({ forceSeek: true });
                 playVideo(followerVideo);
                 startRenderLoop();
                 updatePlayButton();
@@ -415,11 +464,15 @@
             });
 
             primaryVideo.addEventListener('seeked', () => {
-                syncFollowerTime();
+                syncFollowerPlayback({ forceSeek: true });
                 if (!primaryVideo.paused) {
                     playVideo(followerVideo);
                 }
                 renderFrame();
+            });
+
+            primaryVideo.addEventListener('ratechange', () => {
+                syncFollowerPlayback({ forceSeek: true });
             });
 
             primaryVideo.addEventListener('loadedmetadata', () => {
@@ -431,7 +484,7 @@
 
             followerVideo.addEventListener('loadedmetadata', renderFrame);
             followerVideo.addEventListener('loadeddata', () => {
-                syncFollowerTime();
+                syncFollowerPlayback({ forceSeek: true });
                 if (!primaryVideo.paused) {
                     playVideo(followerVideo);
                 }
