@@ -105,7 +105,7 @@
                 <b>The gist:</b>
                 <span>
                     <!-- <strong> -->
-                        Learning dense representations from videos with linear in-context learning.
+                        Learning dense visual representations from video using optical flow and monocular depth cues.
                     <!-- </strong> -->
                 </span>
             </div>
@@ -115,39 +115,68 @@
 
     <main class="container" style="max-width: 768px;">
         <section class="split-video-section" aria-labelledby="split-video-title">
-            <div class="split-video" data-split-video>
-                <canvas class="split-video__canvas" data-split-canvas aria-label="Split-view video comparison"></canvas>
 
-                <div class="split-video__media" aria-hidden="true">
-                    <video class="split-video__source" muted loop playsinline preload="auto" data-master-video>
-                        <source src="/assets/videos/demo_frames.mp4" type="video/mp4">
-                    </video>
+            <div class="demo-subsections">
+                <article class="demo-subsection" aria-labelledby="demo-video-title">
+                    <h2 id="demo-video-title">Preview</h2>
+                    <div class="demo-subsection__media">
+                        <video class="demo-video-player" controls playsinline preload="metadata">
+                            <source src="/assets/videos/qualitative_results_web.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                </article>
 
-                    <video class="split-video__source" muted loop playsinline preload="auto" data-follower-video>
-                        <source src="/assets/videos/demo_feats.mp4" type="video/mp4">
-                    </video>
-                </div>
+                <hr class="divider" />
 
-                <div class="split-video__label split-video__label--left">Image frames</div>
-                <div class="split-video__label split-video__label--right">LILA (PCA)</div>
+                <article class="demo-subsection" aria-labelledby="demo-video-title">
+                    <h2 id="demo-video-title">Linear In-Context Learning (LILA)</h2>
+                    <div class="demo-subsection__media">
+                        <video class="demo-video-player" controls playsinline preload="metadata">
+                            <source src="/assets/videos/method_overview_web.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                </article>
 
-                <button class="split-video__handle"
-                        type="button"
-                        data-split-handle
-                        role="slider"
-                        aria-label="Move split-view divider"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                        aria-valuenow="50">
-                    <span class="split-video__handle-line"></span>
-                    <span class="split-video__handle-grip" aria-hidden="true"></span>
-                </button>
-            </div>
+                <hr class="divider" />
 
-            <div class="split-video-controls" aria-label="Video playback controls">
-                <button type="button" class="split-video-controls__button" data-skip="-5">-5s</button>
-                <button type="button" class="split-video-controls__button split-video-controls__button--primary" data-toggle-play aria-label="Pause video">Pause</button>
-                <button type="button" class="split-video-controls__button" data-skip="5">+5s</button>
+                <article class="demo-subsection" aria-labelledby="split-comparison-title">
+                    <h2 id="split-comparison-title">Split-View Comparison</h2>
+
+                    <div class="split-video" data-split-video>
+                        <canvas class="split-video__canvas" data-split-canvas aria-label="Split-view video comparison"></canvas>
+
+                        <div class="split-video__media" aria-hidden="true">
+                            <video class="split-video__source" muted loop playsinline preload="auto" data-master-video>
+                                <source src="/assets/videos/demo_frames.mp4" type="video/mp4">
+                            </video>
+
+                            <video class="split-video__source" muted loop playsinline preload="auto" data-follower-video>
+                                <source src="/assets/videos/demo_feats.mp4" type="video/mp4">
+                            </video>
+                        </div>
+
+                        <div class="split-video__label split-video__label--left">Image frames</div>
+                        <div class="split-video__label split-video__label--right">LILA (PCA)</div>
+
+                        <button class="split-video__handle"
+                                type="button"
+                                data-split-handle
+                                role="slider"
+                                aria-label="Move split-view divider"
+                                aria-valuemin="0"
+                                aria-valuemax="100"
+                                aria-valuenow="50">
+                            <span class="split-video__handle-line"></span>
+                            <span class="split-video__handle-grip" aria-hidden="true"></span>
+                        </button>
+                    </div>
+
+                    <div class="split-video-controls" aria-label="Video playback controls">
+                        <button type="button" class="split-video-controls__button" data-skip="-5">-5s</button>
+                        <button type="button" class="split-video-controls__button split-video-controls__button--primary" data-toggle-play aria-label="Play video">Play</button>
+                        <button type="button" class="split-video-controls__button" data-skip="5">+5s</button>
+                    </div>
+                </article>
             </div>
         </section>
     </main>
@@ -158,13 +187,25 @@
     <div class="container" style="max-width: 768px;">
         <div class="row">
             <div class="col-md-12">
-                <code>
-                    @inproceedings{Araslanov:2025:LILA,<br>
-                    &nbsp; author = {Araslanov, Nikita and Sundermeyer, Martin and Matsuki, Hidenobu and Tan, David Joseph and Tombari, Federico},<br>
-                    &nbsp; title  = {Featurising Pixels from Dynamic 3D Scenes with Linear In-Context Learners},<br>
-                    &nbsp; booktitle = {CVPR},<br>
-                    &nbsp; year   = {2026},<br>
-                }</code>
+                <div class="citation-card">
+                    <button type="button"
+                            class="citation-copy-button"
+                            data-copy-citation
+                            aria-label="Copy citation to clipboard">
+                        <svg viewBox="0 0 16 16" aria-hidden="true">
+                            <path fill="currentColor" d="M0 6.75C0 5.784.784 5 1.75 5h7.5C10.216 5 11 5.784 11 6.75v7.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"></path>
+                            <path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11H13.5V9.5h.75a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25h-7.5a.25.25 0 0 0-.25.25V2.5H5Z"></path>
+                        </svg>
+                        <span data-copy-label>Copy</span>
+                    </button>
+
+                    <pre class="citation-block"><code data-citation-code>@inproceedings{Araslanov:2025:LILA,
+  author = {Araslanov, Nikita and Sundermeyer, Martin and Matsuki, Hidenobu and Tan, David Joseph and Tombari, Federico},
+  title = {Featurising Pixels from Dynamic 3D Scenes with Linear In-Context Learners},
+  booktitle = {CVPR},
+  year = {2026},
+}</code></pre>
+                </div>
             </div>
         </div>
     </div>
@@ -497,7 +538,57 @@
             setSplit(split);
             updatePlayButton();
             renderFrame();
-            playVideo(primaryVideo);
+        }());
+
+        (function () {
+            const copyButton = document.querySelector('[data-copy-citation]');
+            const citationCode = document.querySelector('[data-citation-code]');
+
+            if (!copyButton || !citationCode) {
+                return;
+            }
+
+            const copyLabel = copyButton.querySelector('[data-copy-label]');
+            let resetTimeoutId = null;
+
+            async function copyText(text) {
+                if (navigator.clipboard && window.isSecureContext) {
+                    await navigator.clipboard.writeText(text);
+                    return;
+                }
+
+                const fallbackInput = document.createElement('textarea');
+                fallbackInput.value = text;
+                fallbackInput.setAttribute('readonly', '');
+                fallbackInput.style.position = 'absolute';
+                fallbackInput.style.left = '-9999px';
+                document.body.appendChild(fallbackInput);
+                fallbackInput.select();
+                if (!document.execCommand('copy')) {
+                    document.body.removeChild(fallbackInput);
+                    throw new Error('Clipboard copy command was rejected.');
+                }
+                document.body.removeChild(fallbackInput);
+            }
+
+            function updateCopyButton(isCopied) {
+                copyButton.classList.toggle('is-copied', isCopied);
+                copyButton.setAttribute('aria-label', isCopied ? 'Citation copied' : 'Copy citation to clipboard');
+                copyLabel.textContent = isCopied ? 'Copied!' : 'Copy';
+            }
+
+            copyButton.addEventListener('click', async () => {
+                try {
+                    await copyText(citationCode.textContent.trim());
+                    window.clearTimeout(resetTimeoutId);
+                    updateCopyButton(true);
+                    resetTimeoutId = window.setTimeout(() => {
+                        updateCopyButton(false);
+                    }, 2000);
+                } catch (error) {
+                    updateCopyButton(false);
+                }
+            });
         }());
     </script>
 </body>
