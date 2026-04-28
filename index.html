@@ -120,7 +120,7 @@
                 <article class="demo-subsection" aria-labelledby="demo-video-title">
                     <h2 id="demo-video-title">Preview</h2>
                     <div class="demo-subsection__media">
-                        <video class="demo-video-player" controls playsinline preload="metadata">
+                        <video class="demo-video-player" controls autoplay muted playsinline preload="auto" data-preview-video>
                             <source src="/assets/videos/qualitative_results_web.mp4" type="video/mp4">
                         </video>
                     </div>
@@ -210,7 +210,158 @@
         </div>
     </div>
 
+    <div class="tracking-consent" id="tracking-consent-banner" data-tracking-consent hidden>
+        <p class="tracking-consent__copy">
+            This site uses cookies for analytics.
+        </p>
+        <div class="tracking-consent__actions">
+            <button type="button"
+                    class="tracking-consent__button tracking-consent__button--primary"
+                    data-tracking-accept>
+                Accept
+            </button>
+        </div>
+    </div>
+
     <script>
+        (function () {
+            const measurementId = 'G-6TP00XV0FX';
+            const storageKey = 'lila-pixels-analytics-consent';
+            const banner = document.querySelector('[data-tracking-consent]');
+            const acceptButton = document.querySelector('[data-tracking-accept]');
+            let consentState = readStoredConsent();
+            let analyticsReady = false;
+            let analyticsLoadPromise = null;
+
+            if (!banner || !acceptButton) {
+                return;
+            }
+
+            function readStoredConsent() {
+                try {
+                    const value = window.localStorage.getItem(storageKey);
+                    if (value === 'granted') {
+                        return value;
+                    }
+                } catch (error) {}
+
+                return null;
+            }
+
+            function storeConsent(value) {
+                try {
+                    window.localStorage.setItem(storageKey, value);
+                } catch (error) {}
+            }
+
+            function setBannerVisibility(isVisible) {
+                banner.hidden = !isVisible;
+                document.body.classList.toggle('has-tracking-consent-banner', isVisible);
+            }
+
+            function ensureAnalytics() {
+                if (analyticsReady) {
+                    return Promise.resolve();
+                }
+
+                if (analyticsLoadPromise) {
+                    return analyticsLoadPromise;
+                }
+
+                window['ga-disable-' + measurementId] = false;
+                window.dataLayer = window.dataLayer || [];
+                window.gtag = window.gtag || function () {
+                    window.dataLayer.push(arguments);
+                };
+                window.gtag('consent', 'default', {
+                    analytics_storage: 'granted'
+                });
+
+                analyticsLoadPromise = new Promise((resolve, reject) => {
+                    const existingScript = document.querySelector('script[data-gtag-id="' + measurementId + '"]');
+
+                    if (existingScript) {
+                        analyticsReady = true;
+                        window.gtag('js', new Date());
+                        window.gtag('config', measurementId);
+                        resolve();
+                        return;
+                    }
+
+                    const script = document.createElement('script');
+                    script.async = true;
+                    script.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(measurementId);
+                    script.dataset.gtagId = measurementId;
+                    script.onload = () => {
+                        analyticsReady = true;
+                        window.gtag('js', new Date());
+                        window.gtag('config', measurementId);
+                        resolve();
+                    };
+                    script.onerror = () => {
+                        analyticsLoadPromise = null;
+                        reject(new Error('Failed to load Google Analytics.'));
+                    };
+
+                    document.head.appendChild(script);
+                });
+
+                return analyticsLoadPromise;
+            }
+
+            function applyConsent(nextConsent) {
+                consentState = nextConsent;
+                storeConsent(nextConsent);
+                setBannerVisibility(false);
+
+                window['ga-disable-' + measurementId] = false;
+                ensureAnalytics().then(() => {
+                    if (typeof window.gtag === 'function') {
+                        window.gtag('consent', 'update', {
+                            analytics_storage: 'granted'
+                        });
+                    }
+                }).catch(() => {});
+            }
+
+            acceptButton.addEventListener('click', () => {
+                applyConsent('granted');
+            });
+
+            if (consentState === 'granted') {
+                ensureAnalytics().then(() => {
+                    if (typeof window.gtag === 'function') {
+                        window.gtag('consent', 'update', {
+                            analytics_storage: 'granted'
+                        });
+                    }
+                }).catch(() => {});
+            }
+
+            setBannerVisibility(consentState === null);
+        }());
+
+        (function () {
+            const previewVideo = document.querySelector('[data-preview-video]');
+
+            if (!previewVideo) {
+                return;
+            }
+
+            function tryAutoplay() {
+                previewVideo.play().catch(() => {});
+            }
+
+            previewVideo.muted = true;
+            previewVideo.autoplay = true;
+
+            if (previewVideo.readyState >= HTMLMediaElement.HAVE_FUTURE_DATA) {
+                tryAutoplay();
+            } else {
+                previewVideo.addEventListener('loadeddata', tryAutoplay, { once: true });
+            }
+        }());
+
         (function () {
             const splitVideo = document.querySelector('[data-split-video]');
 
