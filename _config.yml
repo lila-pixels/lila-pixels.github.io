@@ -1,7 +1,7 @@
 title: Featurising Pixels from Dynamic 3D Scenes with Linear In-Context Learners
 email: nikita.araslanov@tum.de
 
-description: "Project page"
+description: "Project page for the CVPR 2026 paper Featurising Pixels from Dynamic 3D Scenes with Linear In-Context Learners."
 
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://lila-pixels.github.io" # the base hostname & protocol for your site, e.g. http://example.com

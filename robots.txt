@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://lila-pixels.github.io/sitemap.xml
